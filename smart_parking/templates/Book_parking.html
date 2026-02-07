@@ -1,0 +1,59 @@
+
+<!doctype html><html><head><meta charset="utf-8"><title>Book Slot - Smart Parking</title><link rel="stylesheet" href="../static/css/style.css"></head><body>
+
+<div class="header container">
+  <div class="brand">
+    <img src="../static/images/logo.jpg" alt="logo">
+    <div>
+      <h1>Smart Parking</h1>
+      <div style="font-size:12px;color:var(--muted)">City-wide parking & reservations</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="home.html">Home</a>
+    <a href="Book_parking.html">Book</a>
+    <a href="SmartPrediction.html">Prediction</a>
+    <a href="MyBooking.html" style="color:var(--accent);font-weight:800">My Bookings</a>
+    <a href="profile.html">Profile</a>
+    <a href="SignIn.html" class="btn">Sign In</a>
+  </nav>
+</div>
+
+<div class="container" style="margin-top:12px;">
+  <div class="card" style="max-width:900px;margin:auto;">
+    <h3>Reserve a slot</h3>
+    <div style="display:flex;gap:12px;margin-top:12px;">
+      <div style="flex:1;">
+        <label>Choose location</label>
+        <select>
+          <option>Downtown Plaza</option>
+          <option>City Mall</option>
+          <option>Central Station</option>
+          <option>Airport Terminal 1</option>
+          <option>Tech Park</option>
+        </select>
+        <label style="margin-top:8px">Vehicle</label>
+        <input placeholder="Car / Bike">
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <div style="flex:1">
+            <label>Start</label><input type="datetime-local" value="2025-10-20T05:20">
+          </div>
+          <div style="width:120px;">
+            <label>Duration (hrs)</label><input placeholder="2">
+          </div>
+        </div>
+        <button class="btn" style="margin-top:12px">Reserve & Pay</button>
+      </div>
+      <div style="width:320px;">
+        <div class="card">
+          <h4>Pricing</h4>
+          <div style="margin-top:8px;" class="kv"><div>Downtown Plaza</div><div style="color:var(--muted);margin-left:auto">₹25/hr</div></div>
+          <div class="kv"><div>City Mall</div><div style="color:var(--muted);margin-left:auto">₹20/hr</div></div>
+          <div class="kv"><div>Central Station</div><div style="color:var(--muted);margin-left:auto">₹30/hr</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>
+
