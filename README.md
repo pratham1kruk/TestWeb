@@ -98,7 +98,282 @@ production-simulation-lab/
 | **DNS Management** | Production-style DNS setup with BIND9 |
 | **Web Hosting** | Apache server binding and virtual hosts |
 | **Security** | Firewall configuration and port management |
-| **Networking** | Resolver manipulation and WSL networking |
+---
+
+## 🚀 Quick Start Guide
+
+### 1. **CCtkinter** - Currency Converter GUI
+
+Desktop application for currency conversion with MySQL database integration.
+
+**Prerequisites:**
+- Python 3.8+
+- MySQL Server running
+
+**Setup:**
+```bash
+cd CCtkinter
+pip install -r requirements.txt
+```
+
+**Run:**
+```bash
+python currency_converter.py
+```
+
+**Features:**
+- Real-time currency conversion
+- Tkinter GUI interface
+- MySQL database backend for historical conversions
+- Support for multiple currency pairs
+
+---
+
+### 2. **Honda_Stock_Billing** - Stock Billing Web Application
+
+Web-based stock and billing management system for Honda dealership operations.
+
+**Prerequisites:**
+- Python 3.8+
+- MySQL Server running
+
+**Setup:**
+```bash
+cd Honda_Stock_Billing
+pip install -r requirements.txt
+python init_db.py          # Initialize database
+```
+
+**Configuration:**
+Edit `config.py` with your database credentials:
+```python
+DB_HOST = 'localhost'
+DB_USER = 'root'
+DB_PASSWORD = 'your_password'
+DB_NAME = 'honda_billing'
+```
+
+**Run:**
+```bash
+python app.py
+```
+
+Open browser: **http://localhost:5000**
+
+**Features:**
+- Vehicle stock management
+- Billing and invoicing
+- Customer management
+- Inventory tracking
+- PDF bill generation
+
+---
+
+### 3. **game_lore_api** - Game Metadata Aggregator API
+
+FastAPI REST API that aggregates game data from RAWG and GiantBomb APIs to provide comprehensive game information, franchise timelines, studio histories, and series chains.
+
+**Prerequisites:**
+- Python 3.8+
+- Free API keys from RAWG and GiantBomb
+
+**Setup:**
+```bash
+cd game_lore_api
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate          # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+**Get API Keys:**
+| Service | Registration URL | Status |
+|---------|-----------------|--------|
+| RAWG | https://rawg.io/apidocs | Free tier available |
+| GiantBomb | https://www.giantbomb.com/api/ | Free tier available |
+
+**Configure Environment:**
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and add your API keys:
+```env
+RAWG_API_KEY=your_rawg_api_key_here
+GIANTBOMB_API_KEY=your_giantbomb_api_key_here
+HOST=0.0.0.0
+PORT=5000
+```
+
+**Run:**
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 5000
+```
+
+Open browser: **http://localhost:5000/docs** (Interactive Swagger UI)
+
+**API Endpoints:**
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | API health check and endpoints info |
+| `/search?name=<game_name>` | GET | Search game by name — returns full details (release, studio, story, ratings) |
+| `/lore/{game_slug}` | GET | Get game lore, description, storyline, themes |
+| `/franchise/{franchise_name}/timeline` | GET | Get all franchise entries in chronological order |
+| `/studio/{studio_name}/games` | GET | Get all games from a developer in release order |
+| `/series/{game_name}/chain` | GET | Get predecessor → successor chain for a game series |
+
+**Example Requests:**
+```bash
+# Search for a game
+curl "http://localhost:5000/search?name=The+Witcher+3"
+
+# Get game lore
+curl "http://localhost:5000/lore/the-witcher-3-wild-hunt"
+
+# Get franchise timeline
+curl "http://localhost:5000/franchise/Assassin%27s%20Creed/timeline"
+
+# Get studio history
+curl "http://localhost:5000/studio/Naughty%20Dog/games"
+
+# Get series chain
+curl "http://localhost:5000/series/Assassin%27s%20Creed/chain"
+```
+
+**Architecture:**
+```
+Client Request
+    ↓
+FastAPI Router (main.py)
+    ↓
+Game Aggregator Service (aggregator.py)
+    ↓
+    ├→ RAWG Service (rawg.py)
+    │   └→ RAWG API
+    │
+    └→ GiantBomb Service (giantbomb.py)
+        └→ GiantBomb API
+    ↓
+Unified Response (models.py)
+    ↓
+Client
+```
+
+**Troubleshooting:**
+- If API keys are invalid: Check .env file and verify keys at respective API websites
+- If port 5000 is in use: Change PORT in .env and uvicorn command
+- For CORS issues: The API allows all origins by default; modify main.py if needed
+
+---
+
+### 4. **smart_parking** - Static Website
+
+Static website used for AWS deployment testing and hosting practice.
+
+**Setup:**
+```bash
+cd smart_parking
+# No dependencies needed - pure HTML/CSS/JavaScript
+```
+
+**Serve Locally:**
+```bash
+# Using Python 3
+python -m http.server 8000
+
+# Or using Node.js http-server
+npx http-server
+```
+
+Open browser: **http://localhost:8000**
+
+**Features:**
+- Responsive design
+- Smart parking booking interface
+- User profiles and booking history
+- Real-time parking availability visualization
+
+---
+
+## 🔌 Port Configuration
+
+| Service | Default Port | Environment Variable |
+|---------|--------------|----------------------|
+| game_lore_api (FastAPI) | 5000 | `PORT` in `.env` |
+| Honda_Stock_Billing | 5000 | `FLASK_PORT` in `config.py` |
+| smart_parking (Static) | 8000 | CLI argument |
+| CCtkinter | N/A | Desktop app |
+
+> **Note**: Ensure ports are available before starting services. If a port is already in use, modify the port configuration accordingly.
+
+---
+
+## 💾 Database Setup
+
+### CCtkinter & Honda_Stock_Billing
+Both applications use MySQL. Ensure MySQL is running:
+
+**Windows:**
+```bash
+# Start MySQL service
+net start MySQL80  # or your version
+```
+
+**Linux/WSL:**
+```bash
+sudo service mysql start
+```
+
+**Create Databases:**
+```bash
+mysql -u root -p
+
+CREATE DATABASE currency_converter;
+CREATE DATABASE honda_billing;
+```
+
+---
+
+## 📋 Environment Files
+
+Each project may require `.env` file configuration:
+- `game_lore_api/.env` - API keys and server config
+- `Honda_Stock_Billing/config.py` - Database credentials
+
+Always copy from `.example` files and fill in your credentials before running.
+
+---
+
+## 🛠 Development Workflow
+
+1. **Clone/Navigate** to project directory
+2. **Install** dependencies (`pip install -r requirements.txt`)
+3. **Configure** environment variables (`.env` or config files)
+4. **Start** the service (run script or uvicorn/flask command)
+5. **Test** via browser or curl/Postman
+6. **Debug** using logs and API documentation
+
+---
+
+## ✅ Testing the Setup
+
+### Verify All Services
+```bash
+# Test game_lore_api
+curl http://localhost:5000/
+
+# Test Honda_Stock_Billing
+curl http://localhost:5000/
+
+# Test smart_parking
+curl http://localhost:8000/
+```
+
+---| **Networking** | Resolver manipulation and WSL networking |
 | **Deployment** | Multi-application hosting strategies |
 | **Cloud Operations** | AWS/Tencent deployment experiments |
 | **Validation** | Service health checks and monitoring |
